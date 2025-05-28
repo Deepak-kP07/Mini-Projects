@@ -1,5 +1,4 @@
-// once we got the plant details
-export default function PlantCard({ plant, onAdd, handleCardClick , onRemovePlant }) {
+export default function GardenPlantCard({ plant, onRemove, handleCardClick }) {
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 w-80 overflow-hidden border border-green-100">
       {/* Plant Image */}
@@ -19,7 +18,7 @@ export default function PlantCard({ plant, onAdd, handleCardClick , onRemovePlan
       </div>
 
       {/* Content */}
-      <div className="p-4 flex flex-col h-40">
+      <div className="p-4 flex flex-col h-44">
         {/* Plant Names */}
         <div className="flex-1 space-y-2">
           <h2 className="text-xl font-bold text-gray-800 leading-tight line-clamp-2">
@@ -28,10 +27,42 @@ export default function PlantCard({ plant, onAdd, handleCardClick , onRemovePlan
           <div className="flex items-start space-x-1">
             <span className="text-sm font-medium text-green-700 flex-shrink-0">Scientific:</span>
             <p className="text-sm text-gray-600 italic line-clamp-2 leading-relaxed">
-              {plant?.scientific_name || 'Not available'}
+              {Array.isArray(plant?.scientific_name) 
+                ? plant.scientific_name[0] 
+                : plant?.scientific_name || 'Not available'}
             </p>
           </div>
         </div>
+
+          {/* Additional info available in garden view */}
+            {plant?.family && (
+              <div className="flex items-start space-x-1">
+                <span className="text-sm font-medium text-gray-600 flex-shrink-0">Family:</span>
+                <p className="text-sm text-gray-600 line-clamp-1">
+                  {plant.family}
+                </p>
+              </div>
+            )}
+            
+            {plant?.genus && (
+              <div className="flex items-start space-x-1">
+                <span className="text-sm font-medium text-gray-600 flex-shrink-0">Genus:</span>
+                <p className="text-sm text-gray-600 line-clamp-1">
+                  {plant.genus}
+                </p>
+              </div>
+            )}
+            
+            {plant?.cultivar && (
+              <div className="flex items-start space-x-1">
+                <span className="text-sm font-medium text-gray-600 flex-shrink-0">Cultivar:</span>
+                <p className="text-sm text-gray-600 line-clamp-1">
+                  {plant.cultivar}
+                </p>
+              </div>
+            )}
+          
+
 
         {/* Action Buttons */}
         <div className="flex justify-end space-x-2 pt-3 border-t border-gray-100">
@@ -42,10 +73,10 @@ export default function PlantCard({ plant, onAdd, handleCardClick , onRemovePlan
             <span>View Details</span>
           </button>
           <button
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200 flex items-center space-x-1"
-            onClick={() => onAdd(plant)}
+            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200 flex items-center space-x-1"
+            onClick={() => onRemove(plant.id)}
           >
-            + Add
+            <span>Remove</span>
           </button>
         </div>
       </div>

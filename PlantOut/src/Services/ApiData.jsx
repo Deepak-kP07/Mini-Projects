@@ -1,12 +1,12 @@
 const API_URL = "https://perenual.com/api/v2/species-list?";
-const API_kEY = "sk-sk-CDlM6832f17c4953410551";
+const API_kEY = "sk-eI0F6833e18799ccc10551";
 // const API_URL2 = "https://perenual.com/api/v2/species/details/[id]?";
 import PlantCard from "../Components/PlantCard";
 import Loading from "../Components/Loading";
 import { useState, useEffect } from "react";
 import Modal from "../Components/Modal";
 
-export default function ApiData( {searchTerm}) {
+export default function ApiData( {searchTerm , onAddToGuarden}) {
   const [plants, setPlants] = useState([]);
   const [plantDetails, setPlantDetails] = useState("");
   const [loading, setLoading] = useState(true);
@@ -109,6 +109,7 @@ const [showSearchResults, setShowSearchResults] = useState(false);
                   <div key={plant.id}>
                     <PlantCard
                       plant={plant}
+                      onAdd={onAddToGuarden}
                       handleCardClick={() => {
                         showPlantDetails(plant);
                       }}
